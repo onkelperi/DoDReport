@@ -24,12 +24,9 @@ def getOptions():
 def copyFiles(source, version):
     (options, args)=getOptions().parse_args()
     for file in glob.glob(source + '*_' + version + '_*.gz'):
-#      print "contains logs: " + str(file.find("logs"))
-#      print "contains rlx: " + str(file.find("rlx"))
-#      print "contains artifacts: " + str(file.find("artifacts"))
       if ((file.find("logs") > 0) or ((file.find("rlx") > 0) and (file.find("artifacts") > 0))): 
         print "Copy " + file + " to " + options.outputdir        
-#        shutil.copy(file, options.outputdir)
+        shutil.copy(file, options.outputdir)
 
 def copyAllFiles():
     (options, args)=getOptions().parse_args()
