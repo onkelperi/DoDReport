@@ -76,7 +76,7 @@ def unpackArtifacts(TarPath, UnpackFolder):
 
 def copyLogArchived():
     (options, args)=getOptions().parse_args()
-    LogsFolder = options.outputdir +  "BuildLogs_InstrumentControl_" + options.icversion
+    LogsFolder = options.outputdir + TargetFolderList.BuildLogs
     CreateFolderIfNotExists(LogsFolder)
     FileList = glob.glob(options.outputdir + "*_logs.tar.gz")
     for file in FileList:
@@ -85,7 +85,7 @@ def copyLogArchived():
     
 def copyCovHtml():
     (options, args)=getOptions().parse_args()
-    CovHTMLFolder = options.outputdir + "UnitTestCoverage_InstrumentControl_" + options.icversion
+    CovHTMLFolder = options.outputdir + TargetFolderList.UnitTestCoverage
     CreateFolderIfNotExists(CovHTMLFolder)
     FolderList = os.listdir(options.outputdir + "unpacked/")
     for folder in FolderList:
@@ -97,7 +97,7 @@ def copyCovHtml():
     
 def copyTestResultPDF():
     (options, args)=getOptions().parse_args()
-    LogsFolder = options.outputdir + "UnitTestResults_InstrumentControl_" + options.icversion
+    LogsFolder = options.outputdir + TargetFolderList.UnitTestResults
     CreateFolderIfNotExists(LogsFolder)
     FolderList = os.listdir(options.outputdir + "unpacked/")
     for folder in FolderList:
@@ -117,6 +117,9 @@ def deleteUnusedFilesAndFolders():
 
 def deleteOutputFolder():
     (options, args)=getOptions().parse_args()
+    if (not os.path.exists(options.outputdir)):
+        os.makedirs(options.outputdir)
+        
     print "Delete *.gz files from " + options.outputdir
     for file in glob.glob(options.outputdir + "*.gz"):
         os.remove(file)
