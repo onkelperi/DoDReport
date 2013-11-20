@@ -15,7 +15,7 @@ import re
 def getOptions():
     currentDir = (os.path.dirname( os.path.realpath( __file__ ) ))
     parser = OptionParser(usage="usage: %prog [options]\n\n" \
-        "It helps to create the painful DoD report or at least some part of it.", version="%prog 1.00")
+        "This script helps to geg all needed files for a DoD report.", version="%prog 1.01")
     _add = parser.add_option
     _add ("-v", "--icversion",      action="store",        dest="icversion",     default="0.00.00",                      help="The IC version in the format V.II.SS")
     _add ("-a", "--adpversion",     action="store",        dest="adpversion",    default="0.00.00",                      help="Version of ADProcessor in the format V.II.SS")
@@ -33,7 +33,7 @@ class TargetFolderList():
     Array = [BuildLogs,
              UnitTestCoverage,
              UnitTestResults]
-    
+
 
 def copyFiles(source, version):
     (options, args)=getOptions().parse_args()
@@ -82,7 +82,7 @@ def copyLogArchived():
     for file in FileList:
         print "copy " + file + " to " + LogsFolder
         shutil.copy(file, LogsFolder)
-    
+
 def copyCovHtml():
     (options, args)=getOptions().parse_args()
     CovHTMLFolder = options.outputdir + TargetFolderList.UnitTestCoverage
@@ -94,7 +94,7 @@ def copyCovHtml():
         Destination = CovHTMLFolder + "/" + FolderSubSet[2] + "_" + FolderSubSet[3] + "_UnitTestCoverageReport"
         print "folder: " + folder + ", from Source: " + Source + ", To Destination: " + Destination
         shutil.copytree(Source, Destination)
-    
+
 def copyTestResultPDF():
     (options, args)=getOptions().parse_args()
     LogsFolder = options.outputdir + TargetFolderList.UnitTestResults
@@ -119,7 +119,7 @@ def deleteOutputFolder():
     (options, args)=getOptions().parse_args()
     if (not os.path.exists(options.outputdir)):
         os.makedirs(options.outputdir)
-        
+
     print "Delete *.gz files from " + options.outputdir
     for file in glob.glob(options.outputdir + "*.gz"):
         os.remove(file)
@@ -136,7 +136,7 @@ def main():
     copyAllFiles()
     unpackTAR()
     copyLogArchived()
-    copyCovHtml()    
+    copyCovHtml()
     copyTestResultPDF()
     deleteUnusedFilesAndFolders()
 
